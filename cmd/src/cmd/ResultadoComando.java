@@ -24,7 +24,7 @@ public class ResultadoComando {
     }
     
     public static ResultadoComando entrarModo(String msg){
-        return new ResultadoComando(msg,false,false);
+        return new ResultadoComando(msg,true,false);
     }
     
     public static ResultadoComando salirModo(String msg){

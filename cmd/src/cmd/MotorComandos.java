@@ -101,8 +101,12 @@ public class MotorComandos {
             return ResultadoComando.normal(texto);
         }
         if(comando.equals("Date")){
-            SimpleDateFormat fecha=new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat fecha=new SimpleDateFormat("dd/MM/yyyy\n");
             return ResultadoComando.normal(fecha.format(new Date()));
+        }
+        if(comando.equals("Time")){
+            SimpleDateFormat hora=new SimpleDateFormat("HH:mm:ss");
+            return ResultadoComando.normal(hora.format(new Date()));
         }
         if(comando.equals("Wr")){
             if(arg.equals("")){
@@ -156,9 +160,12 @@ public class MotorComandos {
                 escritor=null;
                 return ResultadoComando.salirModo("Fin de escritura de archivo");
             }
+            escritor.write(linea);
+            escritor.newLine();
+            escritor.flush();
         }
         catch(Exception e){
-            
+            return ResultadoComando.normal("Error al escribir");
         }
         return ResultadoComando.normal("");
     }
