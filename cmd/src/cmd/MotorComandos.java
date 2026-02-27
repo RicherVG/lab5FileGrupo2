@@ -101,11 +101,11 @@ public class MotorComandos {
             return ResultadoComando.normal(texto);
         }
         if(comando.equals("Date")){
-            SimpleDateFormat fecha=new SimpleDateFormat("dd/MM/yyyy\n");
+            SimpleDateFormat fecha=new SimpleDateFormat("La fecha actual es: dd/MM/yyyy\n");
             return ResultadoComando.normal(fecha.format(new Date()));
         }
         if(comando.equals("Time")){
-            SimpleDateFormat hora=new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat hora=new SimpleDateFormat("La hora actual es: HH:mm:ss\n");
             return ResultadoComando.normal(hora.format(new Date()));
         }
         if(comando.equals("Wr")){
