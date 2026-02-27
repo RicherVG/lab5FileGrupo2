@@ -22,14 +22,14 @@ public class VentanaCmd extends JFrame{
         motor = new MotorComandos();
         modo = false;
         setTitle("Administrador: Command Prompt");
-        setSize(900,520);
+        setSize(1050,620);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         area = new JTextArea();
         area.setBackground(Color.BLACK);
         area.setForeground(Color.LIGHT_GRAY);
         area.setCaretColor(Color.WHITE);
-        area.setFont(new Font("Consolas",Font.PLAIN,14));
+        area.setFont(new Font("Consolas",Font.PLAIN,18));
         area.setLineWrap(false);
         add( new JScrollPane(area));
         area.append("Microsoft Windows [Version 10.0.22621.521]\n");
@@ -76,8 +76,12 @@ public class VentanaCmd extends JFrame{
             int fin=area.getDocument().getLength();
             String texto=area.getText(posicionBloqueo,fin - posicionBloqueo);
             texto=texto.trim();
+            if(!modo){
+                texto = texto.trim();
+            }
             area.append("\n");
             ResultadoComando r;
+            
             if(modo)
                 r=motor.escribirLinea(texto);
             else
@@ -96,7 +100,7 @@ public class VentanaCmd extends JFrame{
        } 
         private void prompt(){
             if(modo)
-                area.append("WR> ");
+                area.append("Wr> "+ motor.getPrompt());
             else
                 area.append(motor.getPrompt());
             
@@ -104,4 +108,3 @@ public class VentanaCmd extends JFrame{
              area.setCaretPosition(posicionBloqueo);
         }
     }
-
