@@ -21,22 +21,10 @@ public class VentanaCmd extends JFrame{
     public VentanaCmd(){
         //motor = new MotorComandos();
         
-        setUndecorated(true);
         setTitle("Administrador: Command Prompt");
         setSize(900,520);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        JPanel barra = new JPanel();
-        barra.setBackground(Color.BLUE);
-        barra.setPreferredSize(new Dimension(600, 30));
-
-        JLabel titulo = new JLabel("Mini CMD");
-        titulo.setForeground(Color.WHITE);
-        titulo.setFont(new Font("Consolas", Font.BOLD, 14));
-
-    barra.add(titulo);
         area = new JTextArea();
         area.setBackground(Color.BLACK);
         
