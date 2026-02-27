@@ -14,24 +14,23 @@ import javax.swing.*;
  */
 public class VentanaCmd extends JFrame{
     private JTextArea area;
-    //private MotorComandos motor;
+    private MotorComandos motor;
     private boolean modo;
     private int posicionBloqueo;
     
     public VentanaCmd(){
-        //motor = new MotorComandos();
-        
+        motor = new MotorComandos();
+        modo = false;
         setTitle("Administrador: Command Prompt");
         setSize(900,520);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         area = new JTextArea();
         area.setBackground(Color.BLACK);
-        
         area.setForeground(Color.LIGHT_GRAY);
         area.setCaretColor(Color.WHITE);
         area.setFont(new Font("Consolas",Font.PLAIN,14));
-        
+        area.setLineWrap(false);
         add( new JScrollPane(area));
         area.append("Microsoft Windows [Version 10.0.22621.521]\n");
         area.append("(c) Microsoft Corporation. All rights reserved.\n\n");
@@ -42,15 +41,34 @@ public class VentanaCmd extends JFrame{
         area.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
 
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+               if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     e.consume();
                     procesarComando();
+                    return;
                 }
+
+                
+                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_DELETE) {
+                    if (area.getCaretPosition() <= posicionBloqueo) {
+                        e.consume();
+                        area.setCaretPosition(area.getDocument().getLength());
+                        return;
+                    }
+                }
+
+               
                 if (area.getCaretPosition() < posicionBloqueo) {
                     area.setCaretPosition(area.getDocument().getLength());
                 }
             }
-        });   
+        }); 
+           SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                area.requestFocusInWindow();
+                area.setCaretPosition(area.getDocument().getLength());
+            }
+        });
+
     }
     
     private void procesarComando(){
@@ -58,8 +76,8 @@ public class VentanaCmd extends JFrame{
             int fin=area.getDocument().getLength();
             String texto=area.getText(posicionBloqueo,fin - posicionBloqueo);
             texto=texto.trim();
-            
-           /* ResultadoComando r;
+            area.append("\n");
+            ResultadoComando r;
             if(modo)
                 r=motor.escribirLinea(texto);
             else
@@ -68,7 +86,7 @@ public class VentanaCmd extends JFrame{
                 area.append(r.getMensaje() + "\n");
 
             if (r.isEntrar()) modo = true;
-            if (r.isSalir()) modo = false;*/
+            if (r.isSalir()) modo = false;
 
             prompt();
         } catch (Exception ex) {
@@ -80,7 +98,7 @@ public class VentanaCmd extends JFrame{
             if(modo)
                 area.append("WR> ");
             else
-                //area.append(motor.getPrompt());
+                area.append(motor.getPrompt());
             
              posicionBloqueo = area.getDocument().getLength();
              area.setCaretPosition(posicionBloqueo);
